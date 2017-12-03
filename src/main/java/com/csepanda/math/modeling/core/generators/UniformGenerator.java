@@ -1,6 +1,5 @@
-package com.csepanda.math.modeling.services.generators;
+package com.csepanda.math.modeling.core.generators;
 
-import com.csepanda.math.modeling.services.Generator;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.csepanda.math.modeling.services;
+package com.csepanda.math.modeling.core.generators;
 
 /** General interface of random value generators.
  *
