@@ -22,4 +22,8 @@ public interface OperationalBlock extends Block {
      *  @return true if there is request on servicing inside block and
      *          it can be processed at the current model time */
     boolean process();
+
+    /** Sets the next block after this
+     *  @param block next block */
+    void setNext(Block block);
 }
