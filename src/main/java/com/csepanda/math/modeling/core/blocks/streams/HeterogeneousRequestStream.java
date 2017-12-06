@@ -4,6 +4,7 @@ import com.csepanda.math.modeling.core.blocks.Block;
 import com.csepanda.math.modeling.core.blocks.InputBlock;
 import com.csepanda.math.modeling.core.system.LocalTimeline;
 import com.csepanda.math.modeling.core.Request;
+import com.csepanda.math.modeling.core.system.ModelTime;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,6 +70,6 @@ public class HeterogeneousRequestStream implements InputBlock {
                 .stream()
                 .map(Block::getEventTime)
                 .min(Double::compareTo)
-                .orElse(Double.MAX_VALUE);
+                .orElse(ModelTime.NO_EVENT);
     }
 }

@@ -7,6 +7,7 @@ import com.csepanda.math.modeling.core.RequestData;
 import com.csepanda.math.modeling.core.RequestClass;
 import com.csepanda.math.modeling.core.generators.DeterministicGenerator;
 import com.csepanda.math.modeling.core.generators.Generator;
+import com.csepanda.math.modeling.core.system.ModelTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +92,7 @@ public class HomogeneousRequestStream implements InputBlock {
     public double getEventTime() {
         final double currentModelTime = timer.getTime();
         if (count == 0) {
-            return Double.MAX_VALUE;
+            return ModelTime.NO_EVENT;
         }
 
         final double next = nextRequest.getBirthTime();
