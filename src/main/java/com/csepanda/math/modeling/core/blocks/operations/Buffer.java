@@ -1,7 +1,9 @@
 package com.csepanda.math.modeling.core.blocks.operations;
 
 import com.csepanda.math.modeling.core.Request;
+import com.csepanda.math.modeling.core.RequestClass;
 import com.csepanda.math.modeling.core.system.LocalTimeline;
+import com.csepanda.math.modeling.core.system.ModelTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +13,12 @@ import java.util.List;
  *  @author  Andrey Bova
  *  @version 0.0.1
  *  @since   0.0.1 */
-public class Buffer extends AbstractOperationBlock implements Lockable {
+public class Buffer extends AbstractMeasurableBlock implements Lockable {
     /** Infinite buffer capacity */
     public final static int ENDLESS_CAPACITTY = -1;
 
-    private final List<Request> buf = new ArrayList<>();
+    private final List<Request> buf          = new ArrayList<>();
+    private final List<Double>  bufStartTime = new ArrayList<>();
     private final int capacity;
 
     /** Constructs an instance of Buffer with specified capacity.
@@ -42,9 +45,11 @@ public class Buffer extends AbstractOperationBlock implements Lockable {
             return false;
         } else if (transferNext(request)) {
             passedRequestsCount++;
+            requestPassed(request.getRequestClass(), 0);
             return true;
         } else {
             buf.add(request);
+            bufStartTime.add(timer.getTime());
             if (buf.size() == 1) {
                 timer.addEvent(next.getEventTime(), this);
             }
@@ -60,11 +65,14 @@ public class Buffer extends AbstractOperationBlock implements Lockable {
     public boolean process() {
         final Request request = buf.get(0);
         if (transferNext(request)) {
-            passedRequestsCount++;
             buf.remove(0);
+            final Double startTime = bufStartTime.remove(0);
+            passedRequestsCount++;
+            requestPassed(request.getRequestClass(), timer.getTime() - startTime);
             if (buf.size() > 0) {
                 timer.addEvent(next.getEventTime(), this);
             }
+
             return true;
         } else {
             return false;
@@ -77,5 +85,16 @@ public class Buffer extends AbstractOperationBlock implements Lockable {
     @Override
     public double getEventTime() {
         return next.getEventTime();
+    }
+
+
+    @Override
+    public double getBusyRate() {
+        return -1;
+    }
+
+    @Override
+    public double getBusyRate(RequestClass requestClass) {
+        return -1;
     }
 }

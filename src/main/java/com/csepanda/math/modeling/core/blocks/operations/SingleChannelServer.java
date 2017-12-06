@@ -58,17 +58,10 @@ public class SingleChannelServer extends AbstractServerBlock {
         final double endTime = channel.predictedEndTime();
         final double curTime = timer.getTime();
         if (endTime == curTime) {
-            final ServerUsageStat stat = statistics.get(channel.getRequestClass());
-            if (stat == null) {
-                throw new IllegalStateException("SingleChannelServer usage statistics isn't " +
-                        "initialized to request class "+channel.getRequestClass());
-            }
-
             transferNext(channel.getRequest());
 
             passedRequestsCount++;
-            stat.countOfRequests++;
-            stat.holdTime += channel.getHoldTime();
+            requestPassed(channel.getRequestClass(), channel.getHoldTime());
 
             channel = null;
             return true;
