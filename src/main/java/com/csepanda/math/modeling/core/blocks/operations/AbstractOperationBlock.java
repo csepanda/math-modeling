@@ -1,6 +1,7 @@
 package com.csepanda.math.modeling.core.blocks.operations;
 
 import com.csepanda.math.modeling.core.Request;
+import com.csepanda.math.modeling.core.blocks.AbstractBlock;
 import com.csepanda.math.modeling.core.blocks.Block;
 import com.csepanda.math.modeling.core.blocks.OperationalBlock;
 import com.csepanda.math.modeling.core.blocks.OutputBlock;
@@ -11,10 +12,8 @@ import com.csepanda.math.modeling.core.blocks.OutputBlock;
  *  @author  Andrey Bova
  *  @version 0.0.1
  *  @since   0.0.1 */
-public abstract class AbstractOperationBlock implements OperationalBlock {
+public abstract class AbstractOperationBlock extends AbstractBlock implements OperationalBlock {
     protected Block next;
-
-    private long passedRequestsCount;
 
     /** Returns block that is next in the chain of blocks.
      *  @return block that is next in the chain of blocks */
@@ -26,11 +25,6 @@ public abstract class AbstractOperationBlock implements OperationalBlock {
      *  @param next Block to be next in the chain of blocks */
     public void setNext(Block next) {
         this.next = next;
-    }
-
-    @Override
-    public long getPassedRequestsCount() {
-        return passedRequestsCount;
     }
 
     @Override

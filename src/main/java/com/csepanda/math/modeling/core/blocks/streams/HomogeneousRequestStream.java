@@ -1,5 +1,6 @@
 package com.csepanda.math.modeling.core.blocks.streams;
 
+import com.csepanda.math.modeling.core.blocks.AbstractBlock;
 import com.csepanda.math.modeling.core.blocks.InputBlock;
 import com.csepanda.math.modeling.core.system.LocalTimeline;
 import com.csepanda.math.modeling.core.Request;
@@ -18,7 +19,7 @@ import java.util.List;
  *  @author  Andrey Bova
  *  @version 0.0.1
  *  @since   0.0.1 */
-public class HomogeneousRequestStream implements InputBlock {
+public class HomogeneousRequestStream extends AbstractBlock implements InputBlock {
     private final LocalTimeline timer;
     private final Generator  generator;
 
@@ -77,6 +78,7 @@ public class HomogeneousRequestStream implements InputBlock {
 
             final double fetchTime = nextArrivalInterval + currentModelTime;
             nextRequest = new RequestData(priority, fetchTime, clazz);
+            passedRequestsCount += requests.size();
             return requests.toArray(new Request[0]);
         }
 
@@ -84,6 +86,7 @@ public class HomogeneousRequestStream implements InputBlock {
         nextRequest = new RequestData(priority, fetchTime, clazz);
         timer.addEvent(fetchTime, this);
 
+        passedRequestsCount++;
         return new Request[]{toReturn};
     }
 

@@ -1,5 +1,6 @@
 package com.csepanda.math.modeling.core.blocks.streams;
 
+import com.csepanda.math.modeling.core.blocks.AbstractBlock;
 import com.csepanda.math.modeling.core.blocks.Block;
 import com.csepanda.math.modeling.core.blocks.InputBlock;
 import com.csepanda.math.modeling.core.system.LocalTimeline;
@@ -21,7 +22,7 @@ import java.util.List;
  *  @author  Andrey Bova
  *  @version 0.0.1
  *  @since   0.0.1 */
-public class HeterogeneousRequestStream implements InputBlock {
+public class HeterogeneousRequestStream extends AbstractBlock implements InputBlock {
     private final LocalTimeline timer;
     private final Collection<? extends InputBlock> inputs;
 
@@ -53,6 +54,7 @@ public class HeterogeneousRequestStream implements InputBlock {
         if (requests == null) {
             return new Request[0];
         } else {
+            passedRequestsCount += requests.size();
             return requests.toArray(new Request[0]);
         }
     }

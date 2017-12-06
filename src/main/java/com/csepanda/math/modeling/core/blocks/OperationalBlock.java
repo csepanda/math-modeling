@@ -22,8 +22,4 @@ public interface OperationalBlock extends Block {
      *  @return true if there is request on servicing inside block and
      *          it can be processed at the current model time */
     boolean process();
-
-    /** Returns count of request that successfully passed through that block
-     *  @return count of passed requests */
-    long getPassedRequestsCount();
 }
