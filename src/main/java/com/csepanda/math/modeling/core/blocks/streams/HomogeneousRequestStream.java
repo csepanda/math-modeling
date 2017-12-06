@@ -62,12 +62,13 @@ public class HomogeneousRequestStream extends AbstractBlock implements InputBloc
     @Override
     public Request[] fetch() {
         final double currentModelTime = timer.getTime();
-        if (count != 0 && currentModelTime != nextRequest.getBirthTime()) {
+        if (count == 0 || currentModelTime != nextRequest.getBirthTime()) {
             return new RequestData[0];
         }
 
         final Request toReturn = nextRequest; if (count > 0) count--;
         double nextArrivalInterval = generator.generate();
+        System.out.println(count);
         if (nextArrivalInterval == 0) {
             List<Request> requests = new ArrayList<>();
             requests.add(toReturn);
