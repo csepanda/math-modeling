@@ -35,11 +35,10 @@ public class LocalTimeline implements Timeline {
 
     @Override
     public double getNearestEventTime() {
-        final ModelEvent first = futureEvents.first();
-        if (first == null) {
+        if (futureEvents.isEmpty()) {
             return ModelTime.NO_EVENT;
         } else {
-            return first.predictedTime;
+            return futureEvents.first().predictedTime;
         }
     }
 
