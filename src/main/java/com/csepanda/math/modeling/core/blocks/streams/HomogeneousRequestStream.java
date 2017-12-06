@@ -68,7 +68,6 @@ public class HomogeneousRequestStream extends AbstractBlock implements InputBloc
 
         final Request toReturn = nextRequest; if (count > 0) count--;
         double nextArrivalInterval = generator.generate();
-        System.out.println(count);
         if (nextArrivalInterval == 0) {
             List<Request> requests = new ArrayList<>();
             requests.add(toReturn);
