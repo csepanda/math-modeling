@@ -41,6 +41,7 @@ public class Buffer extends AbstractOperationBlock implements Lockable {
         if (isLocked()) {
             return false;
         } else if (transferNext(request)) {
+            passedRequestsCount++;
             return true;
         } else {
             buf.add(request);
@@ -59,6 +60,7 @@ public class Buffer extends AbstractOperationBlock implements Lockable {
     public boolean process() {
         final Request request = buf.get(0);
         if (transferNext(request)) {
+            passedRequestsCount++;
             buf.remove(0);
             if (buf.size() > 0) {
                 timer.addEvent(next.getEventTime(), this);

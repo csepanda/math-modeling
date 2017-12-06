@@ -36,7 +36,6 @@ public abstract class AbstractOperationBlock extends AbstractBlock implements Op
 
     @Override
     public boolean transferNext(Request request) {
-        passedRequestsCount++;
         if (next instanceof OperationalBlock) {
             return ((OperationalBlock) next).seize(request);
         } else if (next instanceof OutputBlock) {

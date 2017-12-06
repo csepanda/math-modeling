@@ -66,6 +66,7 @@ public class SingleChannelServer extends AbstractServerBlock {
 
             transferNext(channel.getRequest());
 
+            passedRequestsCount++;
             stat.countOfRequests++;
             stat.holdTime += channel.getHoldTime();
 
