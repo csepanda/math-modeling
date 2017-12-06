@@ -37,7 +37,7 @@ public abstract class AbstractMeasurableBlock extends AbstractOperationBlock imp
         return statistics.values().stream().
                 map(ServerUsageStat::busyRate).
                 reduce(Double::sum).
-                orElse(-1.0);
+                orElse(0.0);
     }
 
     @Override
@@ -56,11 +56,11 @@ public abstract class AbstractMeasurableBlock extends AbstractOperationBlock imp
         final double summaryHoldTime = stats.stream().
                 map(ServerUsageStat::getHoldTime).
                 reduce(Double::sum).
-                orElse(-1.0);
+                orElse(0.0);
         final long summaryRequestCount = stats.stream().
                 map(ServerUsageStat::getCountOfRequests).
                 reduce(Long::sum).
-                orElse(-1L);
+                orElse(1L);
 
         return summaryHoldTime / summaryRequestCount;
     }
