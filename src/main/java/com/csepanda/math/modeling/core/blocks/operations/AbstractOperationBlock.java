@@ -5,6 +5,7 @@ import com.csepanda.math.modeling.core.blocks.AbstractBlock;
 import com.csepanda.math.modeling.core.blocks.Block;
 import com.csepanda.math.modeling.core.blocks.OperationalBlock;
 import com.csepanda.math.modeling.core.blocks.OutputBlock;
+import com.csepanda.math.modeling.core.system.LocalTimeline;
 
 /** Represents general behaviour of operational block:
  *  transferring through the block to the next.
@@ -13,7 +14,13 @@ import com.csepanda.math.modeling.core.blocks.OutputBlock;
  *  @version 0.0.1
  *  @since   0.0.1 */
 public abstract class AbstractOperationBlock extends AbstractBlock implements OperationalBlock {
+    protected final LocalTimeline timer;
+
     protected Block next;
+
+    protected AbstractOperationBlock(LocalTimeline timeline) {
+        this.timer = timeline;
+    }
 
     /** Returns block that is next in the chain of blocks.
      *  @return block that is next in the chain of blocks */

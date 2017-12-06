@@ -9,6 +9,8 @@ import com.csepanda.math.modeling.core.blocks.Block;
  *  @since   0.0.1
  */
 public class ModelEvent implements Comparable<ModelEvent> {
+    private final long id;
+
     /** time when event is going to happen */
     final double predictedTime;
     /** block where event is going to happen */
@@ -17,15 +19,22 @@ public class ModelEvent implements Comparable<ModelEvent> {
     /** Constructs an instance of ModelEvent with specified
      *  time and block.
      *  @param predictedTime model time when event is going to happen
-     *  @param eventBlock    block where event is going to happen */
-    ModelEvent(double predictedTime, Block eventBlock) {
+     *  @param eventBlock    block where event is going to happen
+     *  @param id            event id */
+    ModelEvent(double predictedTime, Block eventBlock, long id) {
         this.predictedTime = predictedTime;
-        this.eventBlock = eventBlock;
+        this.eventBlock    = eventBlock;
+        this.id            = id;
     }
 
     @Override
     public int compareTo(ModelEvent o) {
-        return Double.compare(predictedTime, o.predictedTime);
+        final int compare = Double.compare(predictedTime, o.predictedTime);
+        if (compare == 0 && !this.equals(o)) {
+            return Long.compare(this.id, o.id);
+        } else {
+            return compare;
+        }
     }
 
     @Override

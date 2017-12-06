@@ -20,8 +20,6 @@ import java.util.Map;
  *  @version 0.0.1
  *  @since   0.0.1 */
 public abstract class AbstractServerBlock extends AbstractOperationBlock implements ServerBlock {
-    protected final LocalTimeline timer;
-
     protected final Map<RequestClass, ServerUsageStat> statistics = new HashMap<>();
     protected final Map<RequestClass, RequestHandler>  handlers   = new HashMap<>();
 
@@ -33,12 +31,12 @@ public abstract class AbstractServerBlock extends AbstractOperationBlock impleme
      * @param capacity count of channels
      * @param timer    local timeline */
     protected AbstractServerBlock(int capacity, LocalTimeline timer) {
+        super(timer);
         if (capacity <= 0) {
             throw new IllegalArgumentException("Illegal count of channels: " + capacity);
         }
 
         this.capacity = capacity;
-        this.timer    = timer;
     }
 
     @Override

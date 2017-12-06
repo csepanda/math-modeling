@@ -16,6 +16,8 @@ public class LocalTimeline implements Timeline {
 
     private final ModelTime timer;
 
+    private long eventCounter;
+
     /** Constructs an instance of LocalTimeline with specified model timer.
      *  @param timer model timer to be local timeline timer */
     public LocalTimeline(ModelTime timer) {
@@ -28,7 +30,7 @@ public class LocalTimeline implements Timeline {
             throw new IllegalStateException("Event timer have already passed");
         }
 
-        futureEvents.add(new ModelEvent(predictedTime, eventBlock));
+        futureEvents.add(new ModelEvent(predictedTime, eventBlock, eventCounter++));
     }
 
     @Override

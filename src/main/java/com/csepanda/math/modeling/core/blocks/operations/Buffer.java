@@ -1,6 +1,7 @@
 package com.csepanda.math.modeling.core.blocks.operations;
 
 import com.csepanda.math.modeling.core.Request;
+import com.csepanda.math.modeling.core.system.LocalTimeline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +21,14 @@ public class Buffer extends AbstractOperationBlock implements Lockable {
     /** Constructs an instance of Buffer with specified capacity.
      *  @param capacity maximum size of requests queue. If it's negative,
      *                  it means that buffer has infinite capacity */
-    public Buffer(int capacity) {
+    public Buffer(int capacity, LocalTimeline timeline) {
+        super(timeline);
         this.capacity = capacity;
     }
 
     @Override
     public boolean isLocked() {
-        return capacity > buf.size() && capacity > 0;
+        return capacity < buf.size() && capacity > 0;
     }
 
     /** Tries to seize buffer. If next block is ready to seize request,
@@ -42,6 +44,9 @@ public class Buffer extends AbstractOperationBlock implements Lockable {
             return true;
         } else {
             buf.add(request);
+            if (buf.size() == 1) {
+                timer.addEvent(next.getEventTime(), this);
+            }
             return true;
         }
     }
@@ -55,6 +60,9 @@ public class Buffer extends AbstractOperationBlock implements Lockable {
         final Request request = buf.get(0);
         if (transferNext(request)) {
             buf.remove(0);
+            if (buf.size() > 0) {
+                timer.addEvent(next.getEventTime(), this);
+            }
             return true;
         } else {
             return false;
