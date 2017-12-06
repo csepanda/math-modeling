@@ -28,9 +28,6 @@ public abstract class AbstractMeasurableBlock extends AbstractOperationBlock imp
     protected void requestPassed(RequestClass requestClass, double holdTime) {
         ServerUsageStat stat = statistics.computeIfAbsent(requestClass, k -> new ServerUsageStat());
 
-//        if (this instanceof Buffer) {
-//            System.out.println("HOLD TIME " + holdTime);
-//        }
         stat.holdTime += holdTime;
         stat.countOfRequests++;
     }
